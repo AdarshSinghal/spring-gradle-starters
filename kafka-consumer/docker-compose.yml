@@ -1,0 +1,72 @@
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.9.1
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - kafka-net
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "localhost", "2181" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  kafka:
+    image: confluentinc/cp-kafka:7.9.1
+    container_name: kafka
+    ports:
+      # Exposes Kafka to your local machine (and other containers on the same Docker network)
+      - "9092:9092" # For clients running on your host machine or outside this docker-compose
+      - "29092:29092" # For clients running within the same docker-compose network
+    depends_on:
+      zookeeper:
+        condition: service_healthy
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:29092,PLAINTEXT_HOST://0.0.0.0:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_LOG4J_ROOT_LOGLEVEL: WARN                       # Reduce unnecessary logging
+      KAFKA_TOOLS_LOG4J_LOGLEVEL: ERROR                     # Reduce unnecessary logging
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    networks:
+      - kafka-net
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "localhost", "29092" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka-ui
+    ports:
+      - "8080:8080" # Kafka UI will be accessible on http://localhost:8080
+    depends_on:
+      - kafka
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+      LOGGING_LEVEL_ROOT: WARN
+      LOGGING_LEVEL_COM_PROVECTUS: INFO
+      #DYNAMIC_CONFIG_ENABLED: 'true' # Allows UI configuration through the web interface if needed
+    networks:
+      - kafka-net
+    healthcheck:
+      test: [ "CMD", "wget", "--spider", "-q", "http://localhost:8080/api/clusters" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks: # Define a custom network
+  kafka-net:
+    driver: bridge
