@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: kafka-csr
+  kafka:
+
+    # Kafka Consumer Properties
+    consumer:
+      bootstrap-servers: localhost:9092
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+    # Kafka Producer Properties
+    producer: # For sending to DLT
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+logging:
+  level:
+    com.as.kafka.csr: DEBUG
