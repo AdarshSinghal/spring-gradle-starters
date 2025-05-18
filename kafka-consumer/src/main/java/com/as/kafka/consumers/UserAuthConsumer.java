@@ -1,4 +1,4 @@
-package com.as.kafka.csr;
+package com.as.kafka.consumers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -11,10 +11,9 @@ public class UserAuthConsumer {
 
     @KafkaListener(topics = "user-topic", groupId = "user-auth-service")
     public void consumeMessageForPrimaryGroup(ConsumerRecord<String, String> record) {
-        String key = record.key();
         String message = record.value();
 
-        if (key == null || message == null || key.isBlank() || message.isBlank()) {
+        if (message == null || message.isBlank()) {
             log.warn("Invalid message received.");
             return;
         }
@@ -22,7 +21,7 @@ public class UserAuthConsumer {
         log.info("Received  message in user auth service: key={}, value={}, partition={}, offset={}",
                 record.key(), message, record.partition(), record.offset());
 
-        if (!key.toLowerCase().contains("jwt")) {
+        if (!message.toLowerCase().contains("jwt")) {
             log.info("Authentication failed. Missing JWT in message: {}", message);
             return;
         }

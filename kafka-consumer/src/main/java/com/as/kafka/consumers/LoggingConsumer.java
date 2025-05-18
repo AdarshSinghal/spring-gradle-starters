@@ -1,4 +1,4 @@
-package com.as.kafka.csr;
+package com.as.kafka.consumers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -11,15 +11,14 @@ public class LoggingConsumer {
     @KafkaListener(topics = "user-topic", groupId = "logging-service")
     public void consumeMessageForLogging(ConsumerRecord<String, String> record) {
 
-        String key = record.key();
         String message = record.value();
 
-        if (key ==null || message == null || key.isBlank() || message.isBlank()) {
+        if (message == null || message.isBlank()) {
             log.warn("Invalid message received.");
             return;
         }
 
-        if (key.toLowerCase().contains("jwt")) {
+        if (message.toLowerCase().contains("jwt")) {
             log.info("User performed operation using JWT");
             return;
         }

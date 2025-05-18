@@ -1,12 +1,18 @@
 spring:
   application:
     name: kafka-csr
+  profiles:
+    active: default
   kafka:
+
+    # Auto create topic if missing
+    admin:
+      auto-create: true
 
     # Kafka Consumer Properties
     consumer:
       bootstrap-servers: localhost:9092
-      auto-offset-reset: earliest
+      auto-offset-reset: latest #Refer readme to know more
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 
@@ -16,6 +22,12 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
+
+
+
 logging:
   level:
-    com.as.kafka.csr: DEBUG
+    org.springframework: warn
+    org.apache.kafka: warn
+    com.as.kafka: debug
+

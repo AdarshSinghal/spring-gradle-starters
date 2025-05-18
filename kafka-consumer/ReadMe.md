@@ -18,7 +18,7 @@
 
 ### auto.offset.reset:
 
-In `application.properties` we used  `spring.kafka.consumer.auto-offset-reset=earliest`.
+In `application.properties` we used  `spring.kafka.consumer.auto-offset-reset=latest`.
 
 
 - latest: The consumer will start reading only new messages that arrive after it starts (this is often the default).

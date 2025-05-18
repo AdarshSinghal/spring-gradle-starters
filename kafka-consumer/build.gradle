@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.as.kafka'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 
 java {
     toolchain {
@@ -37,3 +37,24 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+// This resolves -> no main manifest attribute, in "app.jar"
+jar {
+    enabled = false
+}
+
+bootJar {
+    archiveBaseName.set("app")
+    archiveVersion.set("")
+//    manifest {
+//        attributes('Main-Class': 'com.as.kafka.Application')
+//    }
+    mainClass.set("com.as.kafka.Application")
+}
+
+//jar {
+//    manifest {
+//        attributes('Main-Class': 'com.as.kafka.Application')
+//    }
+//    archiveBaseName.set("app")
+//}

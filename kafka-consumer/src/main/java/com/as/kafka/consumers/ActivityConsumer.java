@@ -1,10 +1,8 @@
-package com.as.kafka.csr;
+package com.as.kafka.consumers;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
@@ -20,10 +18,9 @@ public class ActivityConsumer {
     @KafkaListener(topics = "user-activity", groupId = "activity-service")
     public void consumeActivityMessage(ConsumerRecord<String, String> record) {
 
-        String key = record.key();
         String message = record.value();
 
-        if (key ==null || message == null || key.isBlank() || message.isBlank()) {
+        if (message == null || message.isBlank()) {
             log.warn("Invalid message received.");
             return;
         }
@@ -32,7 +29,7 @@ public class ActivityConsumer {
                 record.key(), message, record.partition(), record.offset());
 
 
-        if (message.length() > 10) {
+        if (message.length() > 16) {
             log.warn("Message too long: key={}, length={}. Sending to DLT.", record.key(), message.length());
             kafkaTemplate.send(DLT_TOPIC, record.key(), message);
             return;
