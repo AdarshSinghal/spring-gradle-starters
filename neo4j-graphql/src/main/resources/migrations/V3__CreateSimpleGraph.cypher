@@ -1,0 +1,20 @@
+MERGE (u1)-[:HAS_FRIEND]->(u2)    // Adarsh -> Gaurav
+MERGE (u2)-[:HAS_FRIEND]->(u3)    // Gaurav -> Pramod
+MERGE (u3)-[:HAS_FRIEND]->(u4)    // Pramod -> Ankit
+MERGE (u4)-[:HAS_FRIEND]->(u5)    // Ankit -> Siva
+MERGE (u5)-[:HAS_FRIEND]->(u6)    // Siva -> Siddhant
+MERGE (u6)-[:HAS_FRIEND]->(u7)    // Siddhant -> Venkatesh
+MERGE (u7)-[:HAS_FRIEND]->(u8)    // Venkatesh -> Ossama
+MERGE (u8)-[:HAS_FRIEND]->(u9)    // Ossama -> Sam
+MERGE (u9)-[:HAS_FRIEND]->(u10)   // Sam -> Harish
+MERGE (u10)-[:HAS_FRIEND]->(u11)  // Harish -> Hrusi
+MERGE (u11)-[:HAS_FRIEND]->(u12)  // Hrusi -> Saravanan
+MERGE (u12)-[:HAS_FRIEND]->(u13)  // Saravanan -> KG
+MERGE (u13)-[:HAS_FRIEND]->(u14)  // KG -> Jenn
+MERGE (u14)-[:HAS_FRIEND]->(u15)  // Jenn -> Sangeeth
+MERGE (u15)-[:HAS_FRIEND]->(u16)  // Sangeeth -> Lisa
+MERGE (u16)-[:HAS_FRIEND]->(u17)  // Lisa -> Srikanth
+MERGE (u17)-[:HAS_FRIEND]->(u18)  // Srikanth -> Sushma
+MERGE (u18)-[:HAS_FRIEND]->(u19)  // Sushma -> Chandra
+MERGE (u19)-[:HAS_FRIEND]->(u20)  // Chandra -> Kamal
+MERGE (u20)-[:HAS_FRIEND]->(u1)   // Kamal -> Adarsh (closes the loop)

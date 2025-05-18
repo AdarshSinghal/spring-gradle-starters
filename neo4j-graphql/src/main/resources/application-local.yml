@@ -1,0 +1,12 @@
+spring:
+  neo4j:
+    uri: bolt://localhost:7687  # from docker-compose.yml
+    authentication:
+      username: neo4j           # from docker-compose.yml
+      password: neo4jTest       # from docker-compose.yml
+    security:
+      encrypted: false
+
+server:
+  port: 8500
+# Port also mentioned in application.yml file [scripts/Common/StopServer.sh]

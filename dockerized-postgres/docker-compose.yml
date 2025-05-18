@@ -1,0 +1,37 @@
+services:
+  postgresql:
+    container_name: postgres-local-db
+    image: 'postgres:17-alpine'
+    ports:
+      - '5432:5432'
+    volumes:
+      - 'postgres-local-db-data:/var/lib/postgresql/data'
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+    networks:
+      - java-app-network
+
+  java-app:
+    container_name: java-app
+    image: 'java-app:latest'
+    ports:
+      - '8080:8080'
+    restart: always
+    depends_on:
+      - postgresql
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    networks:
+      - java-app-network
+
+volumes:
+  postgres-local-db-data:
+
+networks:
+  java-app-network:
+    driver: bridge

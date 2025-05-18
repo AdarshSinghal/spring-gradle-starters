@@ -1,0 +1,16 @@
+services:
+  neo4j-db-svc:
+    image: neo4j:5.26 # Want to use another image? Refer - https://hub.docker.com/_/neo4j
+    container_name: neo4j-db-ctr # Being used in scripts/common/DBUtil.sh
+    environment:
+      - NEO4J_AUTH=neo4j/neo4jTest
+    ports: # <host>:<container>
+      - "7474:7474"   # HTTP           | Neo4j Graph UI
+      - "7687:7687"   # Bolt protocol  | Used by Neo4j driver
+    volumes:
+      - neo4j_data:/data
+#      - neo4j_logs:/logs # Optional
+# neo4j_storage:/var/lib/neo4j (Not Tested, you can inspect container and correct path if really required)
+
+volumes:
+  neo4j_data:

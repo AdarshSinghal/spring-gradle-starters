@@ -1,0 +1,18 @@
+services:
+  mongodb:
+    image: 'docker.io/bitnami/mongodb:8.0'
+    container_name: mongo8
+    ports:
+      - "27017:27017"
+    volumes:
+      - 'mongo8_data:/bitnami/mongodb'
+    environment:
+        MONGODB_ROOT_USER: adarsh
+        MONGODB_ROOT_PASSWORD: adarsh
+        MONGODB_USERNAME: adarsh
+        MONGODB_PASSWORD: adarsh
+        MONGODB_DATABASE: course
+
+volumes:
+  mongo8_data:
+    driver: local

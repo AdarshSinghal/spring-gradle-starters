@@ -1,0 +1,15 @@
+type User {
+    id: ID!
+    name: String!
+    friend: User
+}
+
+type Query {
+    getAllUsers: [User!]!
+}
+
+type Mutation {
+    createUsers: [User!]!
+    deleteAllUsers: String
+    deleteUserById(id: ID!): String
+}

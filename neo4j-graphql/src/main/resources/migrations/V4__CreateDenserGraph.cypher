@@ -1,0 +1,14 @@
+MERGE (u1)-[:HAS_FRIEND]->(u5)    // Adarsh -> Siva
+MERGE (u3)-[:HAS_FRIEND]->(u7)    // Pramod -> Venkatesh
+MERGE (u5)-[:HAS_FRIEND]->(u10)   // Siva -> Harish
+MERGE (u7)-[:HAS_FRIEND]->(u12)   // Venkatesh -> Saravanan
+MERGE (u10)-[:HAS_FRIEND]->(u15)  // Harish -> Sangeeth
+MERGE (u12)-[:HAS_FRIEND]->(u18)  // Saravanan -> Sushma
+MERGE (u15)-[:HAS_FRIEND]->(u20)  // Sangeeth -> Kamal
+MERGE (u2)-[:HAS_FRIEND]->(u8)    // Gaurav -> Ossama
+MERGE (u4)-[:HAS_FRIEND]->(u9)    // Ankit -> Sam
+MERGE (u6)-[:HAS_FRIEND]->(u11)   // Siddhant -> Hrusi
+MERGE (u8)-[:HAS_FRIEND]->(u13)   // Ossama -> KG
+MERGE (u9)-[:HAS_FRIEND]->(u14)   // Sam -> Jenn
+MERGE (u11)-[:HAS_FRIEND]->(u16)  // Hrusi -> Lisa
+MERGE (u13)-[:HAS_FRIEND]->(u19)  // KG -> Chandra

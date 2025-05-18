@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: neo4j-graphql
+  profiles:
+    active: local
+
+org:
+  neo4j:
+    migrations:
+      enabled: true
+      locations-to-scan: classpath:/migrations

@@ -1,0 +1,55 @@
+GRAPHQL {{url}}
+
+mutation CreateUsersMutation {
+    createUsers {
+        friend {
+            name
+            id
+        }
+        id
+        name
+    }
+}
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+### Find all users, listing friends upto depth 2
+GRAPHQL {{url}}
+
+query MyQuery {
+    getAllUsers {
+        id
+        name
+        friend {
+            id
+            name
+            friend {
+                id
+                name
+            }
+        }
+    }
+}
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+### Delete all users
+GRAPHQL {{url}}
+
+mutation MyMutation {
+  deleteAllUsers
+}
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}

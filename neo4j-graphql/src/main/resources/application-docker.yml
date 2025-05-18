@@ -1,0 +1,15 @@
+spring:
+  neo4j:
+    uri: bolt://172.17.0.1:7687
+    authentication:
+      username: neo4j
+      password: neo4jTest
+
+server:
+  port: 8501
+
+
+# Set host in neo4j.uri according to environment.
+# Linux Docker -> 172.17.0.1
+# Windows Docker -> host.docker.internal for docker
+# Windows Podman -> host.containers.internal
